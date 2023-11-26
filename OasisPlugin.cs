@@ -28,7 +28,7 @@ namespace OasisCustomCommands
 
             Logger.Log("OasisCustomCommands, Version " + OasisPlugin.version);
             Logger.Log("Checking errors... ");
-            Logger.Log(LoadCommands() == false ? "CustomCommands...OK " : "CustomCommands...Error ");
+            Logger.Log(LoadCommands() == true ? "CustomCommands...OK " : "CustomCommands...Error ");
             Logger.Log("No errors have been found!");
             #endregion
         }
