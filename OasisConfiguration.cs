@@ -12,13 +12,22 @@ namespace OasisCustomCommands
         public List<string> Text;
     }
 
+
+
+
+
     public class OasisConfiguration : IRocketPluginConfiguration
     {
 
+        #region Declarations
 
         [XmlArrayItem("TextCommand")]
         [XmlArray(ElementName = "TextCommands")]
         public List<TextCommand> TextCommands;
+
+        #endregion
+
+        #region DefaultLoad
 
         public void LoadDefaults()
         {
@@ -31,5 +40,7 @@ namespace OasisCustomCommands
                 }
             };
         }
+
+        #endregion
     }
 }

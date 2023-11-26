@@ -1,5 +1,4 @@
-﻿using Rocket.API.Collections;
-using Rocket.Core;
+﻿using Rocket.Core;
 using Rocket.Core.Logging;
 using Rocket.Core.Plugins;
 using System.Collections.Generic;
@@ -8,28 +7,30 @@ namespace OasisCustomCommands
 {
     public class OasisPlugin : RocketPlugin<OasisConfiguration>
     {
-        public static string version = "1.0.0.1";
+        #region Default
+
+        public static string version = "1.0.0.2";
         public static OasisPlugin Instance;
+
+        #endregion
+
+        #region PluginSpecific
 
         private List<OasisCommand> commands = new List<OasisCommand>();
 
+        #endregion
+
+        #region LoadUnload
         protected override void Load()
         {
+            #region Check
             OasisPlugin.Instance = this;
 
             Logger.Log("OasisCustomCommands, Version " + OasisPlugin.version);
             Logger.Log("Checking errors... ");
-            if (Configuration != null && Configuration.Instance.TextCommands != null)
-            {
-                foreach (TextCommand t in Configuration.Instance.TextCommands)
-                {
-                    OasisCommand command = new OasisCommand(t.Name, t.Help, t.Text);
-                    commands.Add(command);
-                    R.Commands.Register(command);
-                }
-            }
-            Logger.Log("CustomCommands...OK ");
+            Logger.Log(LoadCommands() == false ? "CustomCommands...OK " : "CustomCommands...Error ");
             Logger.Log("No errors have been found!");
+            #endregion
         }
 
         protected override void Unload()
@@ -39,6 +40,25 @@ namespace OasisCustomCommands
                 R.Commands.DeregisterFromAssembly(this.Assembly);
             }
             commands.Clear();
+        }
+        #endregion
+
+        private bool LoadCommands()
+        {
+            try
+            {
+                if (Configuration != null && Configuration.Instance.TextCommands != null)
+                {
+                    foreach (TextCommand t in Configuration.Instance.TextCommands)
+                    {
+                        OasisCommand command = new OasisCommand(t.Name, t.Help, t.Text);
+                        commands.Add(command);
+                        R.Commands.Register(command);
+                    }
+                }
+                return true;
+            }
+            catch { return false; }
         }
 
     }
