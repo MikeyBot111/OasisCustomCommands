@@ -9,7 +9,7 @@ namespace OasisCustomCommands
     {
         #region Default
 
-        public static string version = "1.0.0.2";
+        public static string version = "1.0.0.3";
         public static OasisPlugin Instance;
 
         #endregion
