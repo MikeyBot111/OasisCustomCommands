@@ -8,6 +8,8 @@ namespace OasisCustomCommands
     {
         public string Name;
         public string Help;
+        public bool SendToBrowser;
+        public string BrowserUrl;
         [XmlArrayItem("Line")]
         public List<string> Text;
     }
@@ -32,7 +34,7 @@ namespace OasisCustomCommands
         public void LoadDefaults()
         {
             TextCommands = new List<TextCommand>(){
-                new TextCommand(){Name="rules",Help="Shows the server rules",Text = new List<string>(){
+                new TextCommand(){Name="rules",Help="Shows the server rules",SendToBrowser=false,BrowserUrl="",Text = new List<string>(){
                     "#1 No offensive content in the chat, respect other players",
                     "#2 No bug using, exploiting or abuse of powers",
                     "#3 Don't ask admins for items, teleports, loot respawn, ect.",
