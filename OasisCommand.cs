@@ -23,12 +23,16 @@ namespace OasisCustomCommands
         private List<string> text;
         private string name;
         private string help;
+        private bool sendToBrowser;
+        private string browserUrl;
 
-        public OasisCommand(string commandName, string commandHelp, List<string> text)
+        public OasisCommand(string commandName, string commandHelp, bool SendToBrowser, string BrowserUrl, List<string> text)
         {
             name = commandName;
             help = commandHelp;
             this.text = text;
+            sendToBrowser = SendToBrowser;
+            browserUrl = BrowserUrl;
         }
 
         #endregion
@@ -37,6 +41,12 @@ namespace OasisCustomCommands
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
+            UnturnedPlayer player = (UnturnedPlayer)caller;
+            if (sendToBrowser)
+            {
+                player.Player.sendBrowserRequest(text[0], browserUrl);
+                return;
+            }
             foreach (string l in text)
             {
                 UnturnedChat.Say(caller, l);
